@@ -1,0 +1,32 @@
+{
+  "equipamentos": [
+    {
+      "nome": "Ar Condicionado Split",
+      "local": "Sala 01",
+      "tipo": "Ar Condicionado",
+      "data": "2024-05-10"
+    },
+    {
+      "nome": "Câmera CFTV",
+      "local": "Entrada Principal",
+      "tipo": "Câmera",
+      "data": "2024-06-15"
+    }
+  ],
+  "manutencoes": [
+    {
+      "equipamento": "Ar Condicionado Split",
+      "tipo": "Preventiva",
+      "descricao": "Limpeza de filtros e teste de gás",
+      "data": "2024-06-20",
+      "responsavel": "Roberto Alves"
+    },
+    {
+      "equipamento": "Câmera CFTV",
+      "tipo": "Corretiva",
+      "descricao": "Substituição do cabo coaxial",
+      "data": "2024-06-25",
+      "responsavel": "Roberto Alves"
+    }
+  ]
+}

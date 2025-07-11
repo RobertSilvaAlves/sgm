@@ -1,134 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SGM - Sistema de Gestão de Manutenção</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <h1>SGM - Sistema de Gestão de Manutenção</h1>
+  <div class="container">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+      <h2>SGM</h2>
+      <nav>
+        <ul>
+          <li><button onclick="navegar('home')">Home</button></li>
+          <li><button onclick="navegar('equipamentos')">Equipamentos</button></li>
+          <li><button onclick="navegar('manutencoes')">Manutenções</button></li>
+          <li><button onclick="navegar('fornecedores')">Fornecedores</button></li>
+          <li><button onclick="exportarDados()">Exportar Dados</button></li>
+        </ul>
+      </nav>
+    </aside>
 
-  <!-- CADASTRO DE EQUIPAMENTO -->
-<section>
-  <h2>Cadastrar Equipamento</h2>
-  <form id="formEquipamento">
-    <input type="text" id="nomeEquipamento" placeholder="Nome do equipamento" required />
-    <input type="text" id="localizacao" placeholder="Localização" required />
-    <select id="tipoEquipamento" required>
-      <option disabled selected value="">Selecione o tipo</option>
-      <option value="Ar Condicionado">Ar Condicionado</option>
-      <option value="Câmera">Câmera</option>
-      <option value="Elétrica">Elétrica</option>
-      <option value="Hidráulica">Hidráulica</option>
-    </select>
-    <input type="date" id="dataInstalacao" required />
-
-    <label>Foto do Equipamento:</label>
-    <input type="file" id="fotoEquipamento" accept="image/*" />
-
-    <button type="submit">Salvar Equipamento</button>
-  </form>
-</section>
-
-  <!-- FORMULÁRIO DE MANUTENÇÃO -->
-<section>
-  <h2>Registrar Manutenção</h2>
-  <form id="formManutencao">
-    <select id="equipamentoSelecionado" required></select>
-    <select id="tipoManutencao" required>
-      <option disabled selected value="">Tipo de manutenção</option>
-      <option value="Preventiva">Preventiva</option>
-      <option value="Corretiva">Corretiva</option>
-    </select>
-    <textarea id="descricao" placeholder="Descrição do serviço" required></textarea>
-    <input type="date" id="dataManutencao" required />
-    <input type="text" id="responsavel" placeholder="Responsável" required />
-
-    <label>Foto Antes:</label>
-    <input type="file" id="fotoAntes" accept="image/*" />
-    <label>Foto Depois:</label>
-    <input type="file" id="fotoDepois" accept="image/*" />
-
-    <button type="submit">Salvar Manutenção</button>
-  </form>
-</section>
-
-  <!-- TABELA DE EQUIPAMENTOS -->
-<section>
-  <h2>Equipamentos Cadastrados</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Local</th>
-        <th>Tipo</th>
-        <th>Data</th>
-        <th>Foto</th>
-      </tr>
-    </thead>
-    <tbody id="tabelaEquipamentos"></tbody>
-  </table>
-</section>
-
-<section>
-  <h2>Histórico de Manutenções</h2>
-
-  <form id="formFiltro" class="filtros">
-    <select id="filtroEquipamento">
-      <option value="">Todos os equipamentos</option>
-    </select>
-    <input type="date" id="filtroDataInicio" />
-    <input type="date" id="filtroDataFim" />
-    <button type="submit">Filtrar</button>
-    <button type="button" id="limparFiltro">Limpar</button>
-  </form>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Equipamento</th>
-        <th>Tipo</th>
-        <th>Data</th>
-        <th>Responsável</th>
-        <th>Descrição</th>
-        <th>Antes</th>
-        <th>Depois</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody id="tabelaManutencoes"></tbody>
-  </table>
-</section>
-
-
-  <!-- TABELA DE MANUTENÇÕES -->
-<section>
-  <h2>Histórico de Manutenções</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Equipamento</th>
-        <th>Tipo</th>
-        <th>Data</th>
-        <th>Responsável</th>
-        <th>Descrição</th>
-        <th>Antes</th>
-        <th>Depois</th>
-      </tr>
-    </thead>
-    <tbody id="tabelaManutencoes"></tbody>
-  </table>
-</section>
-<!-- MODAL DE DETALHES -->
-<div id="modal" class="modal hidden">
-  <div class="modal-content">
-    <span id="fecharModal" class="fechar">✖️</span>
-    <div id="modalInfo"></div>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main" id="conteudo">
+      <h1>Bem-vindo ao SGM</h1>
+      <section id="alertasProximasManutencoes">
+        <h2>Manutenções Agendadas Próximas</h2>
+        <ul id="listaAlertas"></ul>
+      </section>
+    </main>
   </div>
-</div>
 
-
+  <script src="script-alertas.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>

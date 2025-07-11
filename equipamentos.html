@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <section class="equipamentos">
+  <h2>Cadastro de Equipamento</h2>
+  <form id="formEquipamento">
+    <div class="form-group">
+      <label for="nomeEquipamento">Nome:</label>
+      <input type="text" id="nomeEquipamento" required />
+    </div>
+    <div class="form-group">
+      <label for="localEquipamento">Local:</label>
+      <input type="text" id="localEquipamento" required />
+    </div>
+    <div class="form-group">
+      <label for="tipoEquipamento">Tipo:</label>
+      <input type="text" id="tipoEquipamento" required />
+    </div>
+    <div class="form-group">
+      <label for="dataInstalacao">Data de Instalação:</label>
+      <input type="date" id="dataInstalacao" required />
+    </div>
+    <div class="form-group">
+      <label for="fotoEquipamento">Foto (URL):</label>
+      <input type="url" id="fotoEquipamento" />
+    </div>
+    <button type="submit">Salvar Equipamento</button>
+  </form>
+
+  <h2>Lista de Equipamentos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Local</th>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Foto</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaEquipamentos"></tbody>
+  </table>
+</section>
+
+</body>
+</html>

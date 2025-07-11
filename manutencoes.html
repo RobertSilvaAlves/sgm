@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <section class="manutencoes">
+  <h2>Registro de Manutenção</h2>
+  <form id="formManutencao">
+    <div class="form-group">
+      <label for="equipamento">Equipamento:</label>
+      <select id="equipamento" required></select>
+    </div>
+    <div class="form-group">
+      <label for="tipo">Tipo:</label>
+      <input type="text" id="tipo" required />
+    </div>
+    <div class="form-group">
+      <label for="data">Data:</label>
+      <input type="date" id="data" required />
+    </div>
+    <div class="form-group">
+      <label for="responsavel">Responsável:</label>
+      <input type="text" id="responsavel" required />
+    </div>
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="fotoAntes">Foto Antes (URL):</label>
+      <input type="url" id="fotoAntes" />
+    </div>
+    <div class="form-group">
+      <label for="fotoDepois">Foto Depois (URL):</label>
+      <input type="url" id="fotoDepois" />
+    </div>
+    <button type="submit">Registrar</button>
+  </form>
+
+  <h2>Histórico de Manutenções</h2>
+  <form id="filtroManutencao" class="filtros">
+    <select id="filtroEquipamento">
+      <option value="">Todos os equipamentos</option>
+    </select>
+    <input type="date" id="filtroDataInicio" />
+    <input type="date" id="filtroDataFim" />
+    <button type="submit">Filtrar</button>
+    <button type="button" id="limparFiltro">Limpar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Equipamento</th>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Responsável</th>
+        <th>Descrição</th>
+        <th>Antes</th>
+        <th>Depois</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaManutencoes"></tbody>
+  </table>
+</section>
+</body>
+</html>

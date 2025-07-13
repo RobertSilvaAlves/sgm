@@ -1,3 +1,39 @@
+    <!-- Formulário para upload de arquivo no Cloudinary -->
+    <h2>Upload de arquivo para o Cloudinary</h2>
+    <form id="formCloudinary">
+      <input type="file" id="arquivoCloudinary" required />
+      <button type="submit">Enviar para Cloudinary</button>
+    </form>
+    <div id="mensagemCloudinary"></div>
+    <script>
+      // Substitua pelo nome do seu upload preset criado no Cloudinary
+      const UPLOAD_PRESET = 'sgm_unsigned';
+      const CLOUD_NAME = 'dmagcicum';
+      document.getElementById('formCloudinary').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const arquivo = document.getElementById('arquivoCloudinary').files[0];
+        if (!arquivo) return;
+        const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+        const formData = new FormData();
+        formData.append('file', arquivo);
+        formData.append('upload_preset', UPLOAD_PRESET);
+        fetch(url, {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.secure_url) {
+            document.getElementById('mensagemCloudinary').innerHTML = `Upload concluído! <a href="${data.secure_url}" target="_blank">Ver arquivo</a>`;
+          } else {
+            document.getElementById('mensagemCloudinary').innerHTML = `<b>Erro ao enviar:</b> <pre>${JSON.stringify(data, null, 2)}</pre>`;
+          }
+        })
+        .catch(error => {
+          document.getElementById('mensagemCloudinary').innerHTML = `<b>Erro de rede:</b> <pre>${error.message}</pre>`;
+        });
+      });
+    </script>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -46,5 +82,30 @@
   <script src="script-alertas.js"></script>
   <script src="script.js"></script>
 
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <!-- Firestore (banco de dados) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <!-- Storage (arquivos) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+    <!-- Authentication (opcional) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script>
+      // Configuração do seu projeto Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyD09a29YYdWTfzQL6yDP6CV23qOOadKGTc",
+        authDomain: "sgm-via-trucks.firebaseapp.com",
+        projectId: "sgm-via-trucks",
+        storageBucket: "sgm-via-trucks.firebasestorage.app",
+        messagingSenderId: "585232806751",
+        appId: "1:585232806751:web:90179b061583bddd10fcea"
+      };
+      // Inicializa o Firebase
+      firebase.initializeApp(firebaseConfig);
+      // Firestore e Storage prontos para uso
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+    </script>
 </body>
 </html>

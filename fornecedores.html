@@ -35,8 +35,9 @@
       <input type="email" id="email" />
     </div>
     <div class="form-group">
-  <label for="notaFiscal">Nota/Boletos (imagem):</label>
-  <input type="file" id="notaFiscal" accept="image/*" />
+  <label for="notaFiscal">Nota/Boletos/Arquivos:</label>
+  <input type="file" id="notaFiscal" accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx" />
+  <small>Você pode anexar imagem, PDF, TXT, DOC, XLS, etc.</small>
 </div>
 
     <div class="form-group">
@@ -55,15 +56,19 @@
         <option value="pago">Pago</option>
       </select>
     </div>
-    <button type="submit">Cadastrar Fornecedor</button>
+    <button type="submit" id="btnSalvarFornecedor">Cadastrar Fornecedor</button>
   </form>
 
   <h2>Lista de Fornecedores</h2>
   <form id="filtroFornecedor" class="filtros">
-    <input type="text" id="filtroEmpresa" placeholder="Empresa..." />
-    <input type="text" id="filtroTipo" placeholder="Tipo de serviço..." />
-    <input type="text" id="filtroRamo" placeholder="Ramo..." />
-    <input type="text" id="filtroNome" placeholder="Nome..." />
+    <label for="tipoFiltro">Filtrar por:</label>
+    <select id="tipoFiltro">
+      <option value="empresa">Empresa</option>
+      <option value="tipo">Tipo de serviço</option>
+      <option value="ramo">Ramo</option>
+      <option value="nome">Nome</option>
+    </select>
+    <input type="text" id="valorFiltro" placeholder="Digite o valor para filtrar..." />
     <button type="submit">Filtrar</button>
     <button type="button" id="limparFiltroFornecedor">Limpar</button>
   </form>
@@ -83,6 +88,7 @@
       </tr>
     </thead>
     <tbody id="tabelaFornecedores"></tbody>
+    <!-- O botão de editar será adicionado via JS na tabela -->
   </table>
 </section>
 </body>

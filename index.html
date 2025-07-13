@@ -12,10 +12,11 @@
   <div class="container">
     <!-- MENU LATERAL -->
     <aside class="sidebar">
-      <h2>SGM</h2>
+      <img src="logo-viatrucks.png" alt="Logo ViaTrucks" style="max-width: 120px; display: block; margin: 0 auto 16px auto;">
+      <!-- <h2>SGM</h2> -->
       <nav>
         <ul>
-          <li><button onclick="navegar('home')">Home</button></li>
+          <li><button onclick="navegar('index')">Home</button></li>
           <li><button onclick="navegar('equipamentos')">Equipamentos</button></li>
           <li><button onclick="navegar('manutencoes')">Manutenções</button></li>
           <li><button onclick="navegar('fornecedores')">Fornecedores</button></li>
@@ -26,10 +27,18 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main" id="conteudo">
-      <h1>Bem-vindo ao SGM</h1>
-      <section id="alertasProximasManutencoes">
-        <h2>Manutenções Agendadas Próximas</h2>
-        <ul id="listaAlertas"></ul>
+      <section class="dashboard">
+        <h1>Bem-vindo ao Sistema de Gestão de Manutenção</h1>
+
+        <div class="alertas-section">
+          <h2>🛠️ Manutenções Agendadas Próximas</h2>
+          <ul id="listaAlertasManutencoes"></ul>
+        </div>
+
+        <div class="alertas-section">
+          <h2>💰 Boletos Próximos do Vencimento</h2>
+          <ul id="listaAlertasBoletos"></ul>
+        </div>
       </section>
     </main>
   </div>

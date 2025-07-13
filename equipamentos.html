@@ -10,6 +10,7 @@
   <section class="equipamentos">
   <h2>Cadastro de Equipamento</h2>
   <form id="formEquipamento">
+    <input type="hidden" id="indiceEquipamentoEdicao" />
     <div class="form-group">
       <label for="nomeEquipamento">Nome:</label>
       <input type="text" id="nomeEquipamento" required />
@@ -27,10 +28,12 @@
       <input type="date" id="dataInstalacao" required />
     </div>
     <div class="form-group">
-      <label for="fotoEquipamento">Foto (URL):</label>
-      <input type="url" id="fotoEquipamento" />
+      <label for="fotoEquipamento">Foto/Video:</label>
+      <input type="file" id="fotoEquipamento" accept="image/*,video/*,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.webm" />
+      <small>Você pode tirar uma foto, gravar vídeo ou escolher da galeria.</small>
     </div>
-    <button type="submit">Salvar Equipamento</button>
+    <button type="submit" id="btnSalvarEquipamento">Salvar Equipamento</button>
+    <button type="button" id="btnCancelarEdicao" style="display:none;">Cancelar Edição</button>
   </form>
 
   <h2>Lista de Equipamentos</h2>

@@ -30,12 +30,14 @@
       <textarea id="descricao" required></textarea>
     </div>
     <div class="form-group">
-      <label for="fotoAntes">Foto Antes (URL):</label>
-      <input type="url" id="fotoAntes" />
+      <label for="fotoAntes">Foto/Video Antes:</label>
+      <input type="file" id="fotoAntes" accept="image/*,video/*,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.webm" capture="environment" />
+      <small>Você pode tirar uma foto, gravar vídeo ou escolher da galeria.</small>
     </div>
     <div class="form-group">
-      <label for="fotoDepois">Foto Depois (URL):</label>
-      <input type="url" id="fotoDepois" />
+      <label for="fotoDepois">Foto/Video Depois:</label>
+      <input type="file" id="fotoDepois" accept="image/*,video/*,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.webm" capture="environment" />
+      <small>Você pode tirar uma foto, gravar vídeo ou escolher da galeria.</small>
     </div>
     <button type="submit">Registrar</button>
   </form>

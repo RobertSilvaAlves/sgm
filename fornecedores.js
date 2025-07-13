@@ -1,3 +1,16 @@
+// Função genérica para upload ao Cloudinary
+function uploadParaCloudinary(file) {
+  const UPLOAD_PRESET = 'sgm_unsigned'; // Altere para o nome do seu preset
+  const CLOUD_NAME = 'dmagcicum';
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  return fetch(url, {
+    method: 'POST',
+    body: formData
+  }).then(r => r.json());
+}
 // IndexedDB helpers para fornecedores
 const DB_NAME_FORNECEDOR = 'SGM_DB';
 const DB_VERSION_FORNECEDOR = 3; // Força upgrade e criação do store fornecedorMidias
@@ -201,6 +214,39 @@ window.inicializarFornecedores = function inicializarFornecedores() {
       var tipoArquivo = arquivo.type;
       var valido = tiposAceitos.some(function(tipo) { return tipoArquivo.indexOf(tipo) === 0; });
       if (!valido) { alert('Tipo de arquivo não suportado. Anexe imagem, PDF, TXT, DOC, XLS, etc.'); return; }
+      uploadParaCloudinary(arquivo).then(data => {
+        if (data.secure_url) {
+          salvarFornecedorComArquivo(data.secure_url);
+        } else {
+          alert('Erro ao enviar arquivo: ' + (data.error?.message || 'Erro desconhecido'));
+        }
+      }).catch((err) => {
+        alert('Erro ao enviar arquivo. Veja o console para detalhes.');
+        console.error('Erro ao enviar para Cloudinary:', err);
+      });
+      return;
+    }
+
+    salvarFornecedorComArquivo(null);
+
+    function salvarFornecedorComArquivo(urlArquivo) {
+      // ...existing code...
+      const novoFornecedor = {
+        nome,
+        empresa,
+        tipo,
+        ramo,
+        telefone,
+        email,
+        nota: urlArquivo,
+        compra,
+        vencimento,
+        status
+      };
+      fornecedores.push(novoFornecedor);
+      localStorage.setItem("fornecedores", JSON.stringify(fornecedores));
+      form.reset();
+      atualizarTabela(fornecedores);
     }
     if (!compra) { alert('Preencha a data de compra ou serviço.'); return; }
     if (!vencimento) { alert('Preencha a data de vencimento.'); return; }

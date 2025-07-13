@@ -1,10 +1,23 @@
+// Função genérica para upload ao Cloudinary
+function uploadParaCloudinary(file) {
+  const UPLOAD_PRESET = 'sgm_unsigned'; // Altere para o nome do seu preset
+  const CLOUD_NAME = 'dmagcicum';
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  return fetch(url, {
+    method: 'POST',
+    body: formData
+  }).then(r => r.json());
+}
 // manutencoes.js
 
 
 // IndexedDB helpers
-const DB_NAME = 'SGM_DB';
-const DB_VERSION = 3;
-const STORE_MANUTENCAO = 'manutencaoMidias';
+// const DB_NAME = 'SGM_DB';
+// const DB_VERSION = 3;
+// const STORE_MANUTENCAO = 'manutencaoMidias';
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -107,25 +120,25 @@ window.inicializarManutencoes = function inicializarManutencoes() {
     const idDepois = fileDepois ? `depois_${equipamento}_${tipo}_${data}_${Date.now()}` : '';
 
     Promise.all([
-      fileAntes ? salvarArquivoNoIndexedDBManutencao(idAntes, fileAntes) : Promise.resolve(),
-      fileDepois ? salvarArquivoNoIndexedDBManutencao(idDepois, fileDepois) : Promise.resolve()
-    ]).then(() => {
+      fileAntes ? uploadParaCloudinary(fileAntes) : Promise.resolve({secure_url: null}),
+      fileDepois ? uploadParaCloudinary(fileDepois) : Promise.resolve({secure_url: null})
+    ]).then(([antesData, depoisData]) => {
       const nova = {
         equipamento,
         tipo,
         data,
         responsavel,
         descricao,
-        antes: idAntes,
-        depois: idDepois,
+        antes: antesData.secure_url,
+        depois: depoisData.secure_url,
       };
       manutencoes.push(nova);
       localStorage.setItem("manutencoes", JSON.stringify(manutencoes));
       form.reset();
       atualizarTabela(manutencoes);
     }).catch((err) => {
-      console.error('Erro ao salvar arquivo no IndexedDB:', err);
-      alert('Erro ao salvar arquivo. Veja o console para detalhes.');
+      alert('Erro ao enviar arquivo. Veja o console para detalhes.');
+      console.error('Erro ao enviar para Cloudinary:', err);
     });
   }
 

@@ -1,3 +1,16 @@
+// Função genérica para upload ao Cloudinary
+function uploadParaCloudinary(file) {
+  const UPLOAD_PRESET = 'sgm_unsigned'; // Altere para o nome do seu preset
+  const CLOUD_NAME = 'dmagcicum';
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  return fetch(url, {
+    method: 'POST',
+    body: formData
+  }).then(r => r.json());
+}
 // equipamentos.js
 
 
@@ -24,37 +37,40 @@ function openDB() {
     request.onerror = function (event) {
       reject(event.target.error);
     };
-  });
-}
-
-function salvarArquivoNoIndexedDB(id, file) {
-  return openDB().then(db => {
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.put(file, id);
-      req.onsuccess = () => resolve();
-      req.onerror = (e) => reject(e);
-    });
-  });
-}
-
-function lerArquivoDoIndexedDB(id) {
-  return openDB().then(db => {
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.get(id);
-      req.onsuccess = (e) => resolve(e.target.result);
-      req.onerror = (e) => reject(e);
-    });
-  });
-}
-
-// Função para inicializar o módulo de equipamentos (pode ser chamada após navegação SPA)
-window.inicializarEquipamentos = function inicializarEquipamentos() {
-  const form = document.getElementById("formEquipamento");
-  const tabela = document.getElementById("tabelaEquipamentos");
+    if (file) {
+      uploadParaCloudinary(file).then(data => {
+        if (data.secure_url) {
+          const novoEquipamento = {
+            nome,
+            local,
+            tipo,
+            data,
+            foto: data.secure_url,
+          };
+          equipamentos.push(novoEquipamento);
+          localStorage.setItem("equipamentos", JSON.stringify(equipamentos));
+          form.reset();
+          atualizarTabela();
+        } else {
+          alert('Erro ao enviar arquivo: ' + (data.error?.message || 'Erro desconhecido'));
+        }
+      }).catch((err) => {
+        alert('Erro ao enviar arquivo. Veja o console para detalhes.');
+        console.error('Erro ao enviar para Cloudinary:', err);
+      });
+    } else {
+      const novoEquipamento = {
+        nome,
+        local,
+        tipo,
+        data,
+        foto: null,
+      };
+      equipamentos.push(novoEquipamento);
+      localStorage.setItem("equipamentos", JSON.stringify(equipamentos));
+      form.reset();
+      atualizarTabela();
+    }
   if (!form || !tabela) return;
 
   let equipamentos = JSON.parse(localStorage.getItem("equipamentos")) || [];
@@ -337,9 +353,11 @@ window.inicializarEquipamentos = function inicializarEquipamentos() {
   form.onsubmit = salvarEquipamento;
   atualizarTabela();
 }
+
 // Inicializa automaticamente se for carregado por página completa
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", inicializarEquipamentos);
 } else {
   inicializarEquipamentos();
+}
 }
